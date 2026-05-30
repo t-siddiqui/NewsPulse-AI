@@ -21,7 +21,7 @@ router.post('/', authMiddleware, async (req, res) => {
 
         // Call FastAPI ML Service with defined timeout
         const mlUrl = process.env.FLASK_API_URL || 'http://localhost:5001';
-        const mlResponse = await axios.post(`${mlUrl}/predict`, 
+        const mlResponse = await axios.post(`${mlUrl}/predict`,
             { text: sanitizedText, url: url || "" },
             { timeout: 15000 }
         );
@@ -32,14 +32,16 @@ router.post('/', authMiddleware, async (req, res) => {
         if (process.env.GROQ_API_KEY) {
             try {
                 const inputText = extracted_text || sanitizedText || '';
-                
+
                 // Formulate search context string
                 let contextString = "None available";
                 if (fact_check_results && fact_check_results.length > 0) {
-                    contextString = fact_check_results.map((r, i) => `[Source ${i+1}] Title: ${r.title}\nContent: ${r.body}\nURL: ${r.href}`).join("\n\n");
+                    contextString = fact_check_results.map((r, i) => `[Source ${i + 1}] Title: ${r.title}\nContent: ${r.body}\nURL: ${r.href}`).join("\n\n");
                 }
 
-                const prompt = `You are a factual verification assistant for NewsPulse. Determine if the factual claim in the input text is TRUE or FALSE based on the provided real-world web search results.
+                const prompt = `You are a factual verification assistant. Determine if the factual claim in the input text is TRUE or FALSE.
+If the Web Search Context is "None available", use your internal knowledge. If you cannot confidently prove the text is false, you MUST output true to avoid false positives.
+
 Input Text to check: "${inputText.substring(0, 500)}"
 DuckDuckGo Web Search Context:
 ${contextString}
@@ -59,7 +61,7 @@ Respond ONLY in valid JSON format: {"is_factual": boolean, "explanation": "strin
                 const responseContent = groqResponse.data.choices[0].message.content;
                 const cleanJson = responseContent.replace(/```json|```/g, "").trim();
                 const assessment = JSON.parse(cleanJson);
-                
+
                 // Override Logic if LLM disagrees with ML
                 if (assessment.is_factual === false) {
                     prediction = 'FAKE';
@@ -82,14 +84,14 @@ Respond ONLY in valid JSON format: {"is_factual": boolean, "explanation": "strin
         });
         await newHistory.save();
 
-        res.json({ 
+        res.json({
             _id: newHistory._id,
-            prediction, 
-            confidence, 
-            reasons, 
-            highlights, 
-            analyzed_url, 
-            timestamp: newHistory.timestamp 
+            prediction,
+            confidence,
+            reasons,
+            highlights,
+            analyzed_url,
+            timestamp: newHistory.timestamp
         });
 
     } catch (error) {
