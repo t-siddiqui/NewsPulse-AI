@@ -14,6 +14,10 @@
 
 </div>
 
+### 🌐 Live Demo & Repository
+- **Live Application:** [https://news-pulse-ai-seven.vercel.app](https://news-pulse-ai-seven.vercel.app)
+- **GitHub Repository:** [https://github.com/t-siddiqui/NewsPulse-AI](https://github.com/t-siddiqui/NewsPulse-AI)
+
 ---
 
 ## 🖼️ System Architecture
