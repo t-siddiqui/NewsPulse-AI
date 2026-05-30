@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🧠 NewsPulse
+# 🧠 NewsPulse-AI
 ### AI-Powered Fake News Detection Platform
 
 **NewsPulse** is a full-stack, enterprise-grade hybrid AI application that detects fake news and factual misinformation by combining deep NLP transformers with real-time web fact-checking via Google Gemini.
