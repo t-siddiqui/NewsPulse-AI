@@ -1,0 +1,16 @@
+# Large training datasets — never commit these
+WELFake_Dataset.csv
+data.csv
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environments
+venv/
+.venv/
+
+# Test coverage
+.coverage
+htmlcov/

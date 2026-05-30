@@ -1,0 +1,48 @@
+{
+  "name": "newspulse-root",
+  "version": "1.0.0",
+  "description": "NewsPulse - AI-Powered Fake News Detection (Root Config)",
+  "private": true,
+  "scripts": {
+    "test:all": "npm run test:backend && npm run test:frontend && npm run test:ml",
+    "test:backend": "cd backend && npm test -- --coverage",
+    "test:frontend": "cd frontend && npm run test -- --coverage",
+    "test:ml": "cd ml_model && pytest --cov=. --cov-report=html",
+    "test:watch": "concurrently \"cd backend && npm test -- --watch\" \"cd frontend && npm test -- --watch\"",
+    "test:e2e": "cd frontend && npm run test:e2e",
+    "coverage:all": "npm run coverage:backend && npm run coverage:frontend && npm run coverage:ml",
+    "coverage:backend": "cd backend && npm test -- --coverage && echo 'Backend coverage generated'",
+    "coverage:frontend": "cd frontend && npm run test:coverage && echo 'Frontend coverage generated'",
+    "coverage:ml": "cd ml_model && pytest --cov=. --cov-report=html && echo 'ML coverage generated'",
+    "coverage:html": "open coverage/index.html",
+    "setup:tests": "npm run setup:backend && npm run setup:frontend && npm run setup:ml",
+    "setup:backend": "cd backend && npm install --save-dev jest supertest",
+    "setup:frontend": "cd frontend && npm install --save-dev vitest @vitest/ui @testing-library/react @testing-library/jest-dom jsdom",
+    "setup:ml": "cd ml_model && pip install pytest pytest-asyncio httpx pytest-cov pytest-timeout",
+    "clean:tests": "rm -rf backend/coverage frontend/coverage ml_model/htmlcov ml_model/.pytest_cache",
+    "report:tests": "npm run coverage:all && npm run coverage:html",
+    "lint": "cd backend && npm run lint && cd ../frontend && npm run lint",
+    "dev": "concurrently \"cd backend && npm start\" \"cd frontend && npm run dev\" \"cd ml_model && python main.py\"",
+    "start": "npm run dev",
+    "build": "cd frontend && npm run build",
+    "health": "npm run health:backend && npm run health:frontend && npm run health:ml",
+    "health:backend": "curl -s http://localhost:5000/health || echo 'Backend: OFFLINE'",
+    "health:frontend": "curl -s http://localhost:5173 || echo 'Frontend: OFFLINE'",
+    "health:ml": "curl -s http://localhost:5001/docs || echo 'ML Service: OFFLINE'",
+    "reset:tests": "npm run clean:tests && npm run setup:tests"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "keywords": [
+    "fake-news-detection",
+    "ai",
+    "nlp",
+    "gemini",
+    "distilbert"
+  ],
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+}

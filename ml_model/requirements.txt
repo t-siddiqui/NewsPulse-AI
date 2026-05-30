@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+pandas
+numpy
+transformers
+torch
+newspaper3k
+lxml[html_clean]
+pydantic
+duckduckgo-search
+scikit-learn

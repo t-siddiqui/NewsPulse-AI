@@ -1,0 +1,62 @@
+# Dependency Directories
+node_modules/
+jspm_packages/
+web_modules/
+
+# Python virtual environments & Cache
+venv/
+.venv/
+env/
+.env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+.docusaurus/
+.vite-inspect/
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+
+# Database & Environment Files
+.env
+.env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+backend/.env
+backend/.env.test
+backend/.env.production
+frontend/.env
+frontend/.env.production
+ml_model/.env
+*.log
+
+# Large Datasets & Trained Models
+ml_model/*.pkl
+ml_model/WELFake_Dataset.csv
+
+# Test execution files
+coverage/
+junit.xml
+
+# Internal archive — reports, datasets, extras not needed in production
+_archive/
