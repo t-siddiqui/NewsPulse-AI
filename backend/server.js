@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const dotenv = require('dotenv');
+// dotenv loaded conditionally below
 const rateLimit = require('express-rate-limit');
 const mongoSanitize = require('express-mongo-sanitize');
 
@@ -11,7 +11,9 @@ const newsRoutes = require('./routes/news');
 const passwordResetRoutes = require('./routes/passwordReset');
 const uploadRoutes = require('./routes/upload');
 
-dotenv.config();
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 
 // ── Security: Crash loudly on startup if critical secrets are missing ──
 if (!process.env.JWT_SECRET && process.env.NODE_ENV === 'production') {
