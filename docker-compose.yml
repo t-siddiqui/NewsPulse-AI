@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    # Optional: If you need to map environment variables from your local machine to the frontend container
+    # environment:
+    #   - VITE_API_URL=http://localhost:5000/api
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - NODE_ENV=development
+      # Tell backend where the ML service is locally
+      - ML_SERVICE_URL=http://ml_model:7860
+      # Add other required backend environment variables here:
+      # - MONGO_URI=your_mongo_uri
+      # - JWT_SECRET=your_jwt_secret
+
+  ml_model:
+    build:
+      context: ./ml_model
+    ports:
+      - "7860:7860"
+    environment:
+      - PORT=7860
+
+  # Optional: Uncomment if you want to run MongoDB locally in Docker as well
+  # mongo:
+  #   image: mongo:latest
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - mongo-data:/data/db
+
+# volumes:
+#   mongo-data:
